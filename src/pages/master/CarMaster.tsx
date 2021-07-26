@@ -35,7 +35,7 @@ function CarMaster() {
                 <Grid item xs={12} sm={12} md={6} lg={3} xl>
                     <Paper>
                         <CustomCard
-                            cardName={"AvanteAD"}
+                            cardName={"Avante AD"}
                             context={<>현실적인 차량
                                 <br/>
                                 주행거리 : 35,000 km
