@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components/macro";
-
+import imgCar_1 from "../../../public/mcb2.jpg"
 
 import {
     Grid,
@@ -41,7 +41,7 @@ function CarMaster() {
                                 주행거리 : 35,000 km
                                 <br/>
                                 연식 : 2020 년식</>}
-                            imgUrl={"/images/mcb2.jpg"}
+                            imgUrl={"/avante.JPG"}
                         />
                     </Paper>
                 </Grid>
@@ -55,7 +55,7 @@ function CarMaster() {
                                 주행거리 : 15,000 km
                                 <br/>
                                 연식 : 2021 년식</>}
-                            imgUrl={"/images/mcb2.jpg"}
+                            imgUrl={"/bmw5.JPG"}
                         />
                     </Paper>
                 </Grid>
@@ -69,7 +69,7 @@ function CarMaster() {
                                 주행거리 : 5,000 km
                                 <br/>
                                 연식 : 2021 년식</>}
-                            imgUrl={"/images/mcb2.jpg"}
+                            imgUrl={"/vanzS.JPG"}
                         />
                     </Paper>
                 </Grid>

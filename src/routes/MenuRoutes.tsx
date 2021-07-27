@@ -15,6 +15,7 @@ import Routes from "./Routes";
 // DashBoard
 const Dashboard = async(() => import("../pages/dashboard/Dashboard"));
 const CarMaster = async(() => import("../pages/master/CarMaster"));
+const Login = async(() => import("../pages/login/Login"));
 const Error404 = async(() => import("../pages/exception/Page404"));
 
 
@@ -81,6 +82,14 @@ export const MenuRoutes = (menus: UserMenu[]) => {
                 children: null,
             },
             {
+                id: "Login",
+                path: "/aCarLog/Login",
+                header: "Test",
+                icon: <Sliders/>,
+                component: Login,
+                children: null,
+            },
+            {
                 id: "Master",
                 path: "/aCarLog/master",
                 header: "Test",
@@ -88,58 +97,19 @@ export const MenuRoutes = (menus: UserMenu[]) => {
                 component: null,
                 children: [
                     {
-                        path: "/master/default",
+                        path: "/aCarLog/master/default",
                         name: "Default",
                         component: Dashboard,
                     },
                     {
-                        path: "/master/carMaster",
+                        path: "/aCarLog/master/carMaster",
                         name: "CarMaster",
                         component: CarMaster,
                     }
                 ],
             });
 
-        for (let menu of menus) {
-
-            if (menu.children) {
-
-                routeMenus.push({
-                    id: menu.name,
-                    path: "/" + menu.viewName.toString().replace(".", "/"),
-                    header: "Test",
-                    icon: menuIconSwitching(menu.code.toString()),
-                    component: searchComponent(menu.viewName),
-                    children: ChildrenMenuSetting(menu.children),
-                })
-
-            } else {
-                routeMenus.push({
-                    id: menu.name,
-                    path: "/" + menu.viewName.toString().replace(".", "/"),
-                    header: "Test",
-                    icon: <Monitor/>,
-                    component: null,
-                    children: null,
-                })
-            }
-        }
-
         return routeMenus;
-    };
-
-    const ChildrenMenuSetting = (childMenu: UserMenu[]) => {
-        let childRouteMenu: Array<RouteChildType> = [];
-
-        for (let menu of childMenu) {
-            childRouteMenu.push({
-                path: "/" + menu.viewName.toString().replace(".", "/"),
-                name: menu.name,
-                component: searchComponent(menu.viewName),
-            })
-        }
-
-        return childRouteMenu;
     };
 
 

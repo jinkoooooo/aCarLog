@@ -1,15 +1,39 @@
+import {Spinner} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import React from "react";
+import styled from "styled-components/macro";
+import { NavLink } from "react-router-dom";
+
+import { Helmet } from "react-helmet";
+
 import {
-    Button,
-    Card,
     CardActionArea,
     CardActions,
     CardContent,
-    CardMedia, CssBaseline,
-    Typography
+    Grid,
+    Link,
+    Breadcrumbs as MuiBreadcrumbs,
+    Button as MuiButton,
+    Card as MuiCard,
+    CardMedia as MuiCardMedia,
+    Divider as MuiDivider,
+    Typography,
 } from "@material-ui/core";
-import {Spinner} from "react-bootstrap";
-import {useEffect, useState} from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core";
+
+import { spacing } from "@material-ui/system";
+
+const Card = styled(MuiCard)(spacing);
+
+const Button = styled(MuiButton)(spacing);
+
+const Divider = styled(MuiDivider)(spacing);
+
+const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
+
+const CardMedia = styled(MuiCardMedia)`
+  height: 220px;
+  background-image: url("/images/mcb2.jpg");
+`;
 
 
 type CardProps = {
@@ -21,8 +45,7 @@ type CardProps = {
 }
 
 export const CustomCard = (props:CardProps) => {
-    const [imgURL, setImgUrl] = useState("/main-logo2.png");
-    const classes = useStyles();
+    const [imgURL, setImgUrl] = useState("/mcb2.jpg");
 
     useEffect(()=>{
         if(props.imgUrl != undefined){
@@ -31,43 +54,38 @@ export const CustomCard = (props:CardProps) => {
     },[])
 
     return(
-        <CssBaseline>
-            <Card className={classes.homeRoot}>
-                <CardActionArea>
-                    {imgURL ?
-                        <CardMedia
-                            className={classes.homeMedia}
-                            image={imgURL}
-                            title="Contemplative Reptile"
-                        />
-                        /*<img className={classes.homeMedia} src={imgURL}/>*/
-                        : <Spinner animation="border" />}
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {props.cardName?props.cardName:"Empty Product"}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {props.context?props.context:
-                                (<>
-                                    비어있는 항목 입니다.
-                                    <br />
-                                    새로운 제품이 추가될 예정입니다.
-                                    <br />
-                                    조금만 기다려 주세요.
-                                </>)}
+        <Card >
+            <CardActionArea>
+                <CardMedia
+                    image={imgURL}
+                    title="Contemplative Reptile"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {props.cardName?props.cardName:"Empty Product"}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {props.context?props.context:
+                            (<>
+                                비어있는 항목 입니다.
+                                <br />
+                                새로운 제품이 추가될 예정입니다.
+                                <br />
+                                조금만 기다려 주세요.
+                            </>)}
 
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Learn More
-                    </Button>
-                </CardActions>
-            </Card>
-        </CssBaseline>
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                    Learn More
+                </Button>
+            </CardActions>
+        </Card>
     )
 };
+/*
 
 const useStyles = makeStyles((theme: Theme) => {
 
@@ -75,9 +93,9 @@ const useStyles = makeStyles((theme: Theme) => {
 
     return createStyles({
 
-        /**
+        /!**
          * Home
-         */
+         *!/
         homeGridRoot: {
             flexGrow: 1,
         },
@@ -106,4 +124,4 @@ const useStyles = makeStyles((theme: Theme) => {
 
 
     });
-});
+});*/
