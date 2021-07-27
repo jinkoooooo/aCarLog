@@ -1,6 +1,6 @@
 {
   "name": "a-car-log",
-  "homepage": "./",
+  "homepage": "./aCarLog",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -75,7 +75,7 @@ export const MenuRoutes = (menus: UserMenu[]) => {
         routeMenus.push(
             {
                 id: "DashBoard",
-                path: "/aCarLog",
+                path: "/",
                 header: "Test",
                 icon: <Sliders/>,
                 component: Dashboard,
@@ -83,7 +83,7 @@ export const MenuRoutes = (menus: UserMenu[]) => {
             },
             {
                 id: "Login",
-                path: "/aCarLog/Login",
+                path: "/Login",
                 header: "Test",
                 icon: <Sliders/>,
                 component: Login,
@@ -91,18 +91,18 @@ export const MenuRoutes = (menus: UserMenu[]) => {
             },
             {
                 id: "Master",
-                path: "/aCarLog/master",
+                path: "/master",
                 header: "Test",
                 icon: <Sliders/>,
                 component: null,
                 children: [
                     {
-                        path: "/aCarLog/master/default",
+                        path: "/master/default",
                         name: "Default",
                         component: Dashboard,
                     },
                     {
-                        path: "/aCarLog/master/carMaster",
+                        path: "/master/carMaster",
                         name: "CarMaster",
                         component: CarMaster,
                     }
