@@ -398,7 +398,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand component={NavLink} to="/" button>
-        <BrandIcon src="/main-logo2.png"/>{" "}
+        <BrandIcon src="./main-logo2.png"/>{" "}
         <Box ml={1}>
           <Typography component="h6" variant="h6" align="center">JG Project Solution</Typography>
         </Box>
