@@ -75,7 +75,7 @@ export const MenuRoutes = (menus: UserMenu[]) => {
         routeMenus.push(
             {
                 id: "DashBoard",
-                path: "/",
+                path: "/aCarLog",
                 header: "Test",
                 icon: <Sliders/>,
                 component: Dashboard,
