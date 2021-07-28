@@ -7,16 +7,12 @@ import {
     Sliders,
     Users, IconProps, Calendar, Grid, Shield, Play, Smartphone, GitPullRequest,
 } from "react-feather";
-import {UserMenu} from "../model/Menu";
 import React from "react";
 import async from "../components/Async";
-import Routes from "./Routes";
 
 // DashBoard
 const Dashboard = async(() => import("../pages/dashboard/Dashboard"));
 const CarMaster = async(() => import("../pages/master/CarMaster"));
-const Login = async(() => import("../pages/login/Login"));
-const Error404 = async(() => import("../pages/exception/Page404"));
 
 
 type ComponentDictionary = {
@@ -34,14 +30,6 @@ export const MenuRoutes = (): Array<RouteType> => {
             header: "Test",
             icon: <Sliders/>,
             component: Dashboard,
-            children: null,
-        },
-        {
-            id: "Login",
-            path: "/aCarLog/Login",
-            header: "Test",
-            icon: <Sliders/>,
-            component: Login,
             children: null,
         },
         {

@@ -11,6 +11,7 @@ import Page404 from "../pages/exception/Page404";
 import {RouteChildType, RouteType} from "../types/routes";
 import {useTypedSelector} from "../redux/reducers";
 import MenuRoutes from "./MenuRoutes";
+import LogOutRoutes from "./LogOutRoutes";
 
 
 const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
@@ -56,10 +57,13 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
 
 
 const Routes = () => {
+    const userAuth = useTypedSelector(state => state.userAuth);
 
     return (<Router>
         <Switch>
-            {childRoutes(DashboardLayout, MenuRoutes())}
+            {userAuth.isAuth?
+                childRoutes(DashboardLayout, MenuRoutes())
+            : childRoutes(DashboardLayout, LogOutRoutes())}
             <Route
                 render={() => (
                     <AuthLayout>

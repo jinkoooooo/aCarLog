@@ -4,6 +4,7 @@ import {User} from "../../model/User";
 export interface UserAuth {
     accessToken: string,
     refreshToken: string,
+    isAuth: boolean,
     user: User|null,
 }
 
@@ -39,6 +40,7 @@ export function userLogout() : UserAuthActionTypes {
 const initialState: UserAuth = {
     accessToken: "",
     refreshToken: "",
+    isAuth: false,
     user: null,
 }
 
@@ -48,6 +50,7 @@ export function userAuthReducer(state= initialState, action : UserAuthActionType
         case USER_LOGIN: return {
             accessToken: action.payload.accessToken,
             refreshToken: action.payload.refreshToken,
+            isAuth: true,
             user: action.payload.user
         }
         case USER_LOGOUT: return initialState;

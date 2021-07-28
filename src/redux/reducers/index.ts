@@ -1,13 +1,11 @@
 import { combineReducers } from "redux";
 
 import themeReducer from "./themeReducer";
-import authReducer from "./authReducer";
 import {userAuthReducer} from "./authStore";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 
 export const rootReducer = combineReducers({
   themeReducer,
-  authReducer,
   userAuth: userAuthReducer
 });
 

@@ -29,7 +29,9 @@ import { green } from "@material-ui/core/colors";
 
 import MenuRoutes from "../routes/MenuRoutes";
 import async from "./Async";
-import {useTypedSelector} from "../redux/reducers";
+import {AppStateType, useTypedSelector} from "../redux/reducers";
+import {useSelector} from "react-redux";
+import LogOutRoutes from "../routes/LogOutRoutes";
 
 const Box = styled(MuiBox)(spacing);
 
@@ -223,45 +225,6 @@ const CategoryBadge = styled(LinkBadge)`
   top: 12px;
 `;
 
-const SidebarSection = styled(Typography)`
-  color: ${(props) => props.theme.sidebar.color};
-  padding: ${(props) => props.theme.spacing(4)}px
-    ${(props) => props.theme.spacing(7)}px
-    ${(props) => props.theme.spacing(1)}px;
-  opacity: 0.9;
-  display: block;
-`;
-
-const SidebarFooter = styled.div`
-  background-color: ${(props) =>
-    props.theme.sidebar.footer.background} !important;
-  padding: ${(props) => props.theme.spacing(2.75)}px
-    ${(props) => props.theme.spacing(4)}px;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-`;
-
-const SidebarFooterText = styled(Typography)`
-  color: ${(props) => props.theme.sidebar.footer.color};
-`;
-
-const SidebarFooterSubText = styled(Typography)`
-  color: ${(props) => props.theme.sidebar.footer.color};
-  font-size: 0.7rem;
-  display: block;
-  padding: 1px;
-`;
-
-const SidebarFooterBadge = styled(Badge)`
-  margin-right: ${(props) => props.theme.spacing(1)}px;
-  span {
-    background-color: ${(props) =>
-      props.theme.sidebar.footer.online.background};
-    border: 1.5px solid ${(props) => props.theme.palette.common.white};
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-  }
-`;
 
 type SidebarCategoryPropsType = {
   name: string;
@@ -357,6 +320,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
   type tplotOptions = {
     [key: number]: boolean;
   };
+
+  const userAuth = useTypedSelector(state => state.userAuth);
+
   const initOpenRoutes = (): tplotOptions => {
     /* Open collapse element that matches current url */
     const pathName = location.pathname;
@@ -405,7 +371,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
       <Scrollbar>
         <List disablePadding>
           <Items>
-            {MenuRoutes().map((category: RouteType, index) => (
+            {userAuth.isAuth ? MenuRoutes().map((category: RouteType, index) => (
               <React.Fragment key={index}>
 
 
@@ -452,7 +418,55 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
                   />
                 ) : null}
               </React.Fragment>
-            ))}
+            )) :
+                LogOutRoutes().map((category: RouteType, index) => (
+                    <React.Fragment key={index}>
+
+
+                      {category.children && category.icon ? (
+                          <React.Fragment key={index}>
+                            <SidebarCategory
+                                isOpen={!openRoutes[index]}
+                                isCollapsable={true}
+                                name={category.id}
+                                icon={category.icon}
+                                button={true}
+                                onClick={() => toggle(index)}
+                            />
+
+                            <Collapse
+                                in={openRoutes[index]}
+                                timeout="auto"
+                                unmountOnExit
+                            >
+                              {category.children.map(
+                                  (route: RouteChildType, index: number) => (
+                                      <SidebarLink
+                                          key={index}
+                                          name={route.name}
+                                          to={route.path}
+                                          icon={route.icon}
+                                          badge={route.badge}
+                                      />
+                                  )
+                              )}
+                            </Collapse>
+                          </React.Fragment>
+                      ) : category.icon ? (
+                          <SidebarCategory
+                              isCollapsable={false}
+                              name={category.id}
+                              to={category.path}
+                              activeClassName="active"
+                              component={NavLink}
+                              icon={category.icon}
+                              exact
+                              button
+                              badge={category.badge}
+                          />
+                      ) : null}
+                    </React.Fragment>
+                ))}
           </Items>
         </List>
       </Scrollbar>

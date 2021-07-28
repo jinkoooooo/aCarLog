@@ -6,19 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/reducers";
 import {setTheme} from "../../redux/actions/themeActions";
 import {THEMES} from "../../constants";
-import {setCurrentUserInfo} from "../../redux/reducers/authStore";
+import {setCurrentUserInfo, UserAuth, userLogout} from "../../redux/reducers/authStore";
 import {Grid, Paper} from "@material-ui/core";
 import {ColDef, DataGrid} from "@material-ui/data-grid";
 
-const Login = (props: any) => {
+const Login = () => {
     const {UserLogin} = AuthAPI();
-    const userAuthReducer = useSelector((state: AppStateType) => state.authReducer);
+
     const dispatcher = useDispatch();
-    // 사용자 정보 패치
-    const settingUser = () => {
-        //dispatcher(setCurrentUserInfo(THEMES.DARK));
-        //console.log("currentTheme", theme.currentTheme);
-    }
 
     //클라이언트 ID (환경변수)
     let googleClientId:string=process.env.REACT_APP_CLIENT_ID||"";
@@ -41,9 +36,30 @@ const Login = (props: any) => {
         console.log(userObj);
         UserLogin(userObj)
             .then(res => {
+                const menus = res.data.get(0) as UserAuth;
+                // 사용자 정보 패치
+                dispatcher(
+                    setCurrentUserInfo({
+                        accessToken: menus.accessToken,
+                        refreshToken: menus.refreshToken,
+                        isAuth: true,
+                        user: userObj,
+                    })
+                );
                 console.log(res);
             })
             .catch(err => {
+                /*dispatcher(
+                    userLogout()
+                );*/
+                dispatcher(
+                    setCurrentUserInfo({
+                        accessToken: "test",
+                        refreshToken: "test",
+                        isAuth: true,
+                        user: userObj,
+                    })
+                );
                 console.log(err);
             });
     }
@@ -57,7 +73,7 @@ const Login = (props: any) => {
                 onSuccess={result=>onLoginSuccess(result)}
                 onFailure={result => console.log(result)}
             />
-            <Grid container spacing={6}>
+            {/*<Grid container spacing={6}>
                 <Grid item xs={12} sm={12} md={6} lg={3} xl>
                     사용자 로그인 정보
                 </Grid>
@@ -75,7 +91,7 @@ const Login = (props: any) => {
                 <div>
                     <label>User ClientToken : {userObjState.apiClientToken}</label>
                 </div>
-            </Paper>
+            </Paper>*/}
 
         </div>
     );

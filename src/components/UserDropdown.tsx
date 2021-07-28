@@ -10,6 +10,9 @@ import {
   MenuItem,
   IconButton as MuiIconButton,
 } from "@material-ui/core";
+import {userLogout} from "../redux/reducers/authStore";
+import {useTypedSelector} from "../redux/reducers";
+import Login from "../pages/login/Login";
 
 
 const IconButton = styled(MuiIconButton)`
@@ -21,8 +24,8 @@ const IconButton = styled(MuiIconButton)`
 
 function UserDropdown() {
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const userAuth = useTypedSelector(state => state.userAuth);
+  const dispatcher = useDispatch();
 
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
@@ -33,7 +36,11 @@ function UserDropdown() {
   };
 
   const handleSignOut = async () => {
+    dispatcher(
+        userLogout()
+    );
   };
+
 
   return (
     <React.Fragment>
@@ -54,7 +61,8 @@ function UserDropdown() {
         onClose={closeMenu}
       >
         <MenuItem onClick={closeMenu}>Profile</MenuItem>
-        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+        {userAuth.isAuth ? <MenuItem onClick={handleSignOut}>Sign Out</MenuItem> : <Login/>}
+
       </Menu>
     </React.Fragment>
   );
