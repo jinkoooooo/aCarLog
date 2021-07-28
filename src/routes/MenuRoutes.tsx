@@ -24,96 +24,47 @@ type ComponentDictionary = {
     component: any;
 };
 
-export const MenuRoutes = (menus: UserMenu[]) => {
-    let routeComponent: ComponentDictionary[] = [];
-    //routeComponent.push({key: "order.storage", component: Storage});
+export const MenuRoutes = (): Array<RouteType> => {
+    let routeMenus: Array<RouteType> = [];
 
+    routeMenus.push(
+        {
+            id: "DashBoard",
+            path: "/aCarLog",
+            header: "Test",
+            icon: <Sliders/>,
+            component: Dashboard,
+            children: null,
+        },
+        {
+            id: "Login",
+            path: "/aCarLog/Login",
+            header: "Test",
+            icon: <Sliders/>,
+            component: Login,
+            children: null,
+        },
+        {
+            id: "Master",
+            path: "/aCarLog/master",
+            header: "Test",
+            icon: <Sliders/>,
+            component: null,
+            children: [
+                {
+                    path: "/aCarLog/master/default",
+                    name: "Default",
+                    component: Dashboard,
+                },
+                {
+                    path: "/aCarLog/master/carMaster",
+                    name: "CarMaster",
+                    component: CarMaster,
+                }
+            ],
+        });
 
-    const searchComponent = (key: string) => {
-        let searchData = routeComponent.find(i => i.key == key);
-
-        if (searchData != undefined) {
-            return searchData.component;
-        } else {
-            return Error404;
-        }
-    };
-
-    function menuIconSwitching(menuCode: string) {
-
-        switch (menuCode) {
-            case "2": // master
-                return <Codesandbox/>;
-                break;
-            case "3": // device
-                return <Smartphone/>;
-                break;
-            case "4": // operation
-                return <GitPullRequest/>;
-                break;
-            case "5": // order
-                return <Calendar/>;
-                break;
-            case "6": // stock
-                return <Grid/>;
-                break;
-            case "7": // scada
-                return <Shield/>;
-                break;
-            case "8": // simulation
-                return <Play/>;
-                break;
-            default:
-                return <Monitor/>;
-                break;
-        }
-    }
-
-    function routeMenuSeting(): Array<RouteType> {
-        let routeMenus: Array<RouteType> = [];
-
-        routeMenus.push(
-            {
-                id: "DashBoard",
-                path: "/aCarLog",
-                header: "Test",
-                icon: <Sliders/>,
-                component: Dashboard,
-                children: null,
-            },
-            {
-                id: "Login",
-                path: "/aCarLog/Login",
-                header: "Test",
-                icon: <Sliders/>,
-                component: Login,
-                children: null,
-            },
-            {
-                id: "Master",
-                path: "/aCarLog/master",
-                header: "Test",
-                icon: <Sliders/>,
-                component: null,
-                children: [
-                    {
-                        path: "/aCarLog/master/default",
-                        name: "Default",
-                        component: Dashboard,
-                    },
-                    {
-                        path: "/aCarLog/master/carMaster",
-                        name: "CarMaster",
-                        component: CarMaster,
-                    }
-                ],
-            });
-
-        return routeMenus;
-    };
-
-
-    return routeMenuSeting();
+    return routeMenus;
 }
 
 export default MenuRoutes;

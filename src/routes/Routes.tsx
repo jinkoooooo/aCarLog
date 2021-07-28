@@ -56,11 +56,10 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
 
 
 const Routes = () => {
-    const userAuth = useTypedSelector(state => state.userAuth);
 
     return (<Router>
         <Switch>
-            {childRoutes(DashboardLayout, MenuRoutes(userAuth.menus))}
+            {childRoutes(DashboardLayout, MenuRoutes())}
             <Route
                 render={() => (
                     <AuthLayout>
