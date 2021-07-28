@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components/macro";
 import { Power } from "react-feather";
-import { useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import {
@@ -39,7 +39,10 @@ function UserDropdown() {
     dispatcher(
         userLogout()
     );
+
+    closeMenu();
   };
+
 
 
   return (
@@ -61,7 +64,8 @@ function UserDropdown() {
         onClose={closeMenu}
       >
         <MenuItem onClick={closeMenu}>Profile</MenuItem>
-        {userAuth.isAuth ? <MenuItem onClick={handleSignOut}>Sign Out</MenuItem> : <Login/>}
+        {userAuth.isAuth ? <MenuItem component={Link} to="/aCarLog" onClick={handleSignOut}>Sign Out</MenuItem>
+            : <MenuItem onClick={closeMenu}><Login/></MenuItem> }
 
       </Menu>
     </React.Fragment>

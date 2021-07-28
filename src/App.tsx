@@ -28,12 +28,21 @@ function App() {
 
     useEffect(() => {
         settingTheme();
+        redirecting();
     }, [])
 
     // 테마 적용 함수
     const settingTheme = () => {
         dispatcher(setTheme(THEMES.DARK));
         console.log("currentTheme", theme.currentTheme);
+    }
+
+    // root redirecting
+    const redirecting = () => {
+        let url = new URL(window.location.href);
+
+        if(url.pathname === "/")
+            window.location.href = '/aCarLog';
     }
 
   return (
