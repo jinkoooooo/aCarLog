@@ -1,4 +1,4 @@
-import authApi from './IApi';
+import authApi, {dataApi} from './IApi';
 import {AxiosRequestConfig} from "axios";
 import {User} from "../model/User";
 
@@ -15,14 +15,20 @@ export function AuthAPI() {
         UserLogin : function(params:User){
 
             return _api.post('/auth/login',
-                    {
+                JSON.stringify({
                         apiClientId:params.apiClientId,
-                        apiClientToken:params.apiClientToken,
-                        userName:params.userName,
-                        email:params.email,
-                        imageUrl:params.imageUrl
-                    }
+                        apiClientToken :params.apiClientToken
+                    })
                 );
+        },
+
+        GetUserData : function(accessToken:string){
+
+            return _api.get('/auth/me', {
+                'headers':{
+                    'X-AUTH-TOKEN': accessToken
+                }
+            });
         }
 
     }

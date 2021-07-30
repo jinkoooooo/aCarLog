@@ -11,7 +11,7 @@ import {Grid, Paper} from "@material-ui/core";
 import {ColDef, DataGrid} from "@material-ui/data-grid";
 
 const Login = () => {
-    const {UserLogin} = AuthAPI();
+    const {UserLogin, GetUserData} = AuthAPI();
 
     const dispatcher = useDispatch();
 
@@ -27,26 +27,51 @@ const Login = () => {
 
         let userObj:User = new User();
         userObj.apiClientId = googleClientId;
-        userObj.apiClientToken = res.accessToken;
+        userObj.apiClientToken = res.tokenId;
         userObj.userName = res.profileObj.name;
         userObj.email = res.profileObj.email;
         userObj.imageUrl = res.profileObj.imageUrl;
 
         setUserObjState(userObj);
-        console.log(userObj);
+        console.log("구글 로그인 성공"+userObj);
+
+        /*const host = 'https://app-msa-gateway.herokuapp.com'
+
+        let token = {
+            apiClientId : userObj.apiClientId,
+            apiClientToken : userObj.apiClientToken
+        }
+
+        const loginReq = fetch(`${host}/auth/login`, {
+            method: 'post',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(token)
+        })
+            .then(res => res.json())
+
+        console.log(loginReq)*/
+
         UserLogin(userObj)
             .then(res => {
-                const menus = res.data.get(0) as UserAuth;
-                // 사용자 정보 패치
-                dispatcher(
-                    setCurrentUserInfo({
-                        accessToken: menus.accessToken,
-                        refreshToken: menus.refreshToken,
-                        isAuth: true,
-                        user: userObj,
-                    })
-                );
-                console.log(res);
+
+                console.log("로그인 성공"+res.data.accessToken);
+                GetUserData(res.data.accessToken).then(res => {
+                    console.log("GetUserData ");
+                    console.log(res.data);
+
+                    // 사용자 정보 패치
+                    dispatcher(
+                        setCurrentUserInfo({
+                            accessToken: res.data.accessToken,
+                            refreshToken: "",
+                            isAuth: true,
+                            user: userObj,
+                        })
+                    );
+                })
+
             })
             .catch(err => {
                 /*dispatcher(
@@ -60,7 +85,7 @@ const Login = () => {
                         user: userObj,
                     })
                 );
-                console.log(err);
+                console.log("로그인 실패"+err);
             });
     }
 
@@ -73,26 +98,6 @@ const Login = () => {
                 onSuccess={result=>onLoginSuccess(result)}
                 onFailure={result => console.log(result)}
             />
-            {/*<Grid container spacing={6}>
-                <Grid item xs={12} sm={12} md={6} lg={3} xl>
-                    사용자 로그인 정보
-                </Grid>
-            </Grid>
-            <Paper>
-                <div>
-                    <label>User Email : {userObjState.email}</label>
-                </div>
-                <div>
-                    <label>User Name : {userObjState.userName}</label>
-                </div>
-                <div>
-                    <label>User ClientId : {userObjState.apiClientId}</label>
-                </div>
-                <div>
-                    <label>User ClientToken : {userObjState.apiClientToken}</label>
-                </div>
-            </Paper>*/}
-
         </div>
     );
 };

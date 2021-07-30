@@ -2,7 +2,7 @@ import merge from "deepmerge";
 import { green, grey, indigo, red } from "@material-ui/core/colors";
 import { THEMES } from "../constants";
 
-const darkColor = {
+const defaultColor = {
     50: "#e9f0fb",
     100: "#c8daf4",
     200: "#a3c1ed",
@@ -13,6 +13,14 @@ const darkColor = {
     700: "#376fd0",
     800: "#2f65cb",
     900: "#2052c2 ",
+};
+
+const darkColor = {
+    100: "#919191",
+    200: "#7d7d7d",
+    300: "#616161",
+    400: "#3d3d3d",
+    500: "#080808"
 };
 
 const turquoiseColor = {
@@ -107,12 +115,12 @@ const darkACLTheme = merge(defaultACLTheme, {
     palette: {
         type: "dark",
         primary: {
-            main: dGreenColor[500],
-            contrastText: "#233044",
+            main: darkColor[500],
+            contrastText: "#fab219",
         },
         background: {
-            default: dGreenColor[100],
-            paper: dGreenColor[200],
+            default: darkColor[100],
+            paper: darkColor[200],
         },
         text: {
             primary: "rgba(255, 255, 255, 0.95)",
@@ -120,36 +128,36 @@ const darkACLTheme = merge(defaultACLTheme, {
         },
     },
     header: {
-        color: yGreenColor[500],
+        color: darkColor[500],
         background: "#1B2635",
         search: {
-            color: dGreenColor[500],
+            color: darkColor[500],
         },
     },
     footer: {
-        color: dGreenColor[500],
+        color: darkColor[500],
         background: "#233044",
     },
     sidebar: {
         color: grey[200],
-        background: dGreenColor[400],
+        background: darkColor[400],
         header: {
             color: grey[200],
-            background: dGreenColor[300],
+            background: darkColor[300],
             brand: {
-                color: dGreenColor[300],
+                color: darkColor[300],
             },
         },
         footer: {
             color: grey[200],
             background: "#6ec7d3",
             online: {
-                background: dGreenColor[500],
+                background: darkColor[500],
             },
         },
         badge: {
             color: "#233044",
-            background: dGreenColor[300],
+            background: darkColor[300],
         },
         text: {
             primary: "rgba(255, 255, 255, 0.95)",
@@ -161,7 +169,7 @@ const darkACLTheme = merge(defaultACLTheme, {
 const greenACLTheme = merge(defaultACLTheme, {
     name: THEMES.GREEN,
     palette: {
-        type: "dark",
+        type: "green",
         primary: {
             main: dGreenColor[500],
             contrastText: "#233044",
@@ -217,7 +225,8 @@ const greenACLTheme = merge(defaultACLTheme, {
 
 const aclTheme: Array<ACLType> = [
     defaultACLTheme,
-    darkACLTheme
+    darkACLTheme,
+    greenACLTheme
 ];
 
 export default aclTheme;

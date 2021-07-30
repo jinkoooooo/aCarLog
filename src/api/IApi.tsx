@@ -7,7 +7,19 @@ const authUrl = process.env.REACT_APP_AUTH_SERVER_URL;
 
 export default function authApi() {
     return axios.create({
-        'baseURL': authUrl
+        'baseURL': authUrl,
+        'headers': {
+            'Content-Type' : 'application/json'
+        }
+    });
+}
+
+export function dataApi(accessToken: string | undefined) {
+    return axios.create({
+        'baseURL': authUrl,
+        'headers':{
+            'X-AUTH-TOKEN': accessToken
+        }
     });
 }
 
