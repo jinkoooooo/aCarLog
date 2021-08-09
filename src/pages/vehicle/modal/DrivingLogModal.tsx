@@ -181,7 +181,7 @@ export function DrivingLogModal(props: DrivingLogModal) {
     },
     {
       field: "drivingOdometer",
-      headerName: "운행 시간",
+      headerName: "운행 거리",
       width: 250,
       headerAlign: "center",
       align: "center",
@@ -205,7 +205,7 @@ export function DrivingLogModal(props: DrivingLogModal) {
 
         return (
             <Grid container justify="center">
-              <a ><Edit2/></a>
+              <a ><Edit2 style={{cursor: 'pointer'}}/></a>
             </Grid>
         )
       }
@@ -222,7 +222,7 @@ export function DrivingLogModal(props: DrivingLogModal) {
 
         return (
             <Grid container justify="center">
-              <a><Trash2/></a>
+              <a><Trash2 style={{cursor: 'pointer'}}/></a>
             </Grid>
         )
       }

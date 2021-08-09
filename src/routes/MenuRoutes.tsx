@@ -12,7 +12,7 @@ import async from "../components/Async";
 
 // DashBoard
 const Dashboard = async(() => import("../pages/dashboard/Dashboard"));
-const CarMaster = async(() => import("../pages/master/CarMaster"));
+const CarMaster = async(() => import("../pages/master/VehicleMaster"));
 const VehiclePage = async(() => import("../pages/vehicle/VehiclePage"));
 
 

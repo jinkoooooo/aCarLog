@@ -25,6 +25,7 @@ import {VehicleData} from "../model/Vehicle";
 import {VehicleAPI} from "../api/VehicleAPI";
 import {DrivingLogModal} from "../pages/vehicle/modal/DrivingLogModal";
 import {DrivingLogInsertModal} from "../pages/vehicle/modal/DrivingLogInsertModal";
+import {VehicleManagerModal} from "../pages/vehicle/modal/VehicleManagerModal";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -49,6 +50,7 @@ export const VehicleCard = (props:CardProps) => {
     const {GetVehicle} = VehicleAPI();
     const [logDialogFlag, setLogDialogFlag] = useState(false);
     const [logInsertFlag, setLogInsertFlag] = useState(false);
+    const [vehicleDetailFlag, setVehicleDetailFlag] = useState(false);
 
     const [bindingVehicleData, setBindingVehicleData] = useState<VehicleData>(new VehicleData());
 
@@ -120,14 +122,19 @@ export const VehicleCard = (props:CardProps) => {
             <CardActions>
                 <Grid container item xs={12} spacing={2} justify="center">
 
-                    <Grid item xs={6} sm={6}>
+                    <Grid item xs={4} sm={4}>
                         <Button size="small" color="primary" onClick = {() => {setLogDialogFlag(!logDialogFlag)}}>
                             운행기록조회
                         </Button>
                     </Grid>
-                    <Grid item xs={6} sm={6}>
+                    <Grid item xs={4} sm={4}>
                         <Button size="small" color="primary" onClick = {() => {setLogInsertFlag(!logInsertFlag)}}>
                             운행기록등록
+                        </Button>
+                    </Grid>
+                    <Grid item xs={4} sm={4}>
+                        <Button size="small" color="primary" onClick = {() => {setVehicleDetailFlag(!vehicleDetailFlag)}}>
+                            차량관리자
                         </Button>
                     </Grid>
                 </Grid>
@@ -145,6 +152,12 @@ export const VehicleCard = (props:CardProps) => {
                 onSubmit={insertClose}
                 onClose={() => setLogInsertFlag(false)}
                 open={logInsertFlag}
+            />
+            <VehicleManagerModal
+                title="관리자 정보"
+                vehicleData={bindingVehicleData}
+                onClose={() => setVehicleDetailFlag(false)}
+                open={vehicleDetailFlag}
             />
         </Card>
     )
