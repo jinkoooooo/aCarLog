@@ -1,11 +1,9 @@
 import React from "react";
-import {User} from "../../model/User";
+import {AuthData} from "../../model/User";
 
 export interface UserAuth {
-    accessToken: string,
-    refreshToken: string,
     isAuth: boolean,
-    user: User|null,
+    user: AuthData|null,
 }
 
 export const USER_LOGIN = "USER_LOGIN";
@@ -38,8 +36,6 @@ export function userLogout() : UserAuthActionTypes {
 //
 //  상태 초기값 설정
 const initialState: UserAuth = {
-    accessToken: "",
-    refreshToken: "",
     isAuth: false,
     user: null,
 }
@@ -48,8 +44,6 @@ export function userAuthReducer(state= initialState, action : UserAuthActionType
 
     switch (action.type) {
         case USER_LOGIN: return {
-            accessToken: action.payload.accessToken,
-            refreshToken: action.payload.refreshToken,
             isAuth: true,
             user: action.payload.user
         }

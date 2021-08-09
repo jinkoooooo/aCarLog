@@ -1,49 +1,42 @@
 import React from 'react';
 
 
-export class User {
-  public apiClientId:string|null;
-  public apiClientToken:string|null;
-  public userName:string;
-  public email:string;
-  public imageUrl:string|null;
+export class AuthData {
+  public apiClientId:string;
+  public apiClientToken:string;
+  public acessToken:string;
+  public userData:UserData|null
 
-  public department:Department|null;
-  public position:Position|null;
-
-
-  constructor(apiClientId: string="", apiClientToken: string="", userName: string="", email: string="", imageUrl: string="") {
+  constructor(apiClientId: string="", apiClientToken: string="", acessToken: string="") {
     this.apiClientId = apiClientId;
     this.apiClientToken = apiClientToken;
-    this.userName = userName;
-    this.email = email;
-    this.imageUrl = imageUrl;
-    this.department = null;
-    this.position = null;
+    this.acessToken = acessToken;
+    this.userData = null;
   }
 }
 
-export class Department{
-  public id:number;
-  public name:string;
-
-  constructor(id:number = 0, name:string = "") {
-    this.id = id;
-    this.name = name;
-  }
+export type UserData = {
+  authApis:AuthApis[],
+  department: Department,
+  position: Position,
+  email:String,
+  id:number,
+  imageUrl:String,
+  updateAt:String,
+  username:String
 }
 
-export class Position{
-  public id:number;
-  public name:string;
-
-  constructor(id:number = 0, name:string = "") {
-    this.id = id;
-    this.name = name;
-  }
+type Department = {
+  id:number,
+  name:string
 }
 
-export class AuthApis{
+type Position = {
+  id:number,
+  name:string
+}
+
+class AuthApis{
   public name:string;
   public authList:AuthApis[] | [];
 

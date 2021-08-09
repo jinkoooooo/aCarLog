@@ -3,10 +3,12 @@ import { combineReducers } from "redux";
 import themeReducer from "./themeReducer";
 import {userAuthReducer} from "./authStore";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {pageStateReducer} from "./pageStore";
 
 export const rootReducer = combineReducers({
   themeReducer,
-  userAuth: userAuthReducer
+  userAuth: userAuthReducer,
+  pageState: pageStateReducer
 });
 
 type RootReducerType = typeof rootReducer;

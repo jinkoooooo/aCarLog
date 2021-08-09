@@ -9,13 +9,15 @@ import Settings from "../components/Settings";
 
 import {spacing} from "@material-ui/system";
 import {
-  Hidden,
-  CssBaseline,
-  Paper as MuiPaper,
-  withWidth,
+    Hidden,
+    CssBaseline,
+    Paper as MuiPaper,
+    withWidth,
 } from "@material-ui/core";
 
 import {isWidthUp} from "@material-ui/core/withWidth";
+import {LoadingProgressBar} from "../components/ProgressBar";
+import {useTypedSelector} from "../redux/reducers";
 
 const drawerWidth = 258;
 
@@ -71,55 +73,57 @@ const MainContent = styled(Paper)`
 `;
 
 type DashboardPropsType = {
-  routes: Array<RouteType>;
-  width: "md" | "xs" | "sm" | "lg" | "xl";
+    routes: Array<RouteType>;
+    width: "md" | "xs" | "sm" | "lg" | "xl";
 };
 
 const Dashboard: React.FC<DashboardPropsType> = ({
-                                                   children,
-                                                   routes,
-                                                   width,
+                                                     children,
+                                                     routes,
+                                                     width,
                                                  }) => {
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
-  return (
-    <Root>
-      <CssBaseline/>
-      <GlobalStyle/>
-      <Drawer>
-        <Hidden mdUp implementation="js">
-          <Sidebar
-            routes={routes}
-            PaperProps={{style: {width: drawerWidth}}}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-          />
-        </Hidden>
-        <Hidden smDown implementation="css">
-          <Sidebar
-            routes={routes}
-            PaperProps={{style: {width: drawerWidth}}}
-          />
-        </Hidden>
-      </Drawer>
-      <AppContent>
-        <Header onDrawerToggle={handleDrawerToggle}/>
-        <MainContent p={isWidthUp("lg", width) ? 12 : 5}>
-          {children}
-        </MainContent>
-        {/*<Footer/>*/}
-      </AppContent>
+    const pageState = useTypedSelector(state => state.pageState);
 
-      {/*테마 고르는 컴포넌트
+    return (
+        <Root>
+            <CssBaseline/>
+            <GlobalStyle/>
+            <Drawer>
+                <Hidden mdUp implementation="js">
+                    <Sidebar
+                        routes={routes}
+                        PaperProps={{style: {width: drawerWidth}}}
+                        variant="temporary"
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                    />
+                </Hidden>
+                <Hidden smDown implementation="css">
+                    <Sidebar
+                        routes={routes}
+                        PaperProps={{style: {width: drawerWidth}}}
+                    />
+                </Hidden>
+            </Drawer>
+            <AppContent>
+                <Header onDrawerToggle={handleDrawerToggle}/>
+                <MainContent p={isWidthUp("lg", width) ? 12 : 5}>
+                    {children}
+                </MainContent>
+                {/*<Footer/>*/}
+            </AppContent>
+            <LoadingProgressBar isOpen={pageState.isLoading}/>
+            {/*테마 고르는 컴포넌트
       <Settings/>*/}
-    </Root>
-  );
+        </Root>
+    );
 };
 
 export default withWidth()(Dashboard);

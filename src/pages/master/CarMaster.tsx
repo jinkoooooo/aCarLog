@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components/macro";
 import imgCar_1 from "../../../public/mcb2.jpg"
 
@@ -10,6 +10,7 @@ import {
 
 import {spacing} from "@material-ui/system";
 import {CustomCard} from "../../components/CustomCard";
+import {VehicleAPI} from "../../api/VehicleAPI";
 
 
 const Divider = styled(MuiDivider)(spacing);

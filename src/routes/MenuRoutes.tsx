@@ -13,12 +13,8 @@ import async from "../components/Async";
 // DashBoard
 const Dashboard = async(() => import("../pages/dashboard/Dashboard"));
 const CarMaster = async(() => import("../pages/master/CarMaster"));
+const VehiclePage = async(() => import("../pages/vehicle/VehiclePage"));
 
-
-type ComponentDictionary = {
-    key: string;
-    component: any;
-};
 
 export const MenuRoutes = (): Array<RouteType> => {
     let routeMenus: Array<RouteType> = [];
@@ -50,7 +46,16 @@ export const MenuRoutes = (): Array<RouteType> => {
                     component: CarMaster,
                 }
             ],
-        });
+        },
+        {
+            id: "VehiclePage",
+            path: "/aCarLog/VehiclePage",
+            header: "VehiclePage",
+            icon: <Sliders/>,
+            component: VehiclePage,
+            children: null,
+        }
+        );
 
     return routeMenus;
 }

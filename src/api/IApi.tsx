@@ -18,6 +18,7 @@ export function dataApi(accessToken: string | undefined) {
     return axios.create({
         'baseURL': authUrl,
         'headers':{
+            'Content-Type' : 'application/json',
             'X-AUTH-TOKEN': accessToken
         }
     });
