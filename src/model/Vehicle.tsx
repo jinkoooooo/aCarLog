@@ -45,3 +45,37 @@ export type Manager = {
     imageUrl:String,
     username:String
 }
+
+
+export class DrivingLog {
+
+    public id: number;
+    public vehicleId: number;
+    public driverId: number;
+    public startDateTime: string;
+    public arriveDateTime: string;
+    public startOdometer: number;
+    public arriveOdometer: number;
+    public createAt:string;
+    public updateAt:string;
+
+    constructor(id: number=0,
+                vehicleId: number=0,
+                driverId: number=0,
+                startDateTime: string="",
+                arriveDateTime: string="",
+                startOdometer: number=0,
+                arriveOdometer: number=0,
+                createAt: string="",
+                updateAt: string="") {
+        this.id = id;
+        this.vehicleId = vehicleId;
+        this.driverId = driverId;
+        this.startDateTime = startDateTime;
+        this.arriveDateTime = arriveDateTime;
+        this.startOdometer = startOdometer;
+        this.arriveOdometer = arriveOdometer;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+    }
+}

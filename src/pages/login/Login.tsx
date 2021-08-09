@@ -37,8 +37,6 @@ const Login = () => {
 
         UserLogin(userObj)
             .then(res => {
-                // loading 플레그 변경
-                dispatcher(setCurrentPageState({isLoading: false}));
                 userObj.acessToken = res.data.accessToken;
                 console.log("로그인 성공"+res.data.accessToken);
                 GetUserData(userObj.acessToken).then(res => {
@@ -62,14 +60,14 @@ const Login = () => {
             })
             .catch(err => {
 
-                // loading 플레그 변경
-                dispatcher(setCurrentPageState({isLoading: false}));
-
                 dispatcher(
                     userLogout()
                 );
                 console.log("로그인 실패"+err);
-            });
+            }).finally(() => {
+            // loading 플레그 변경
+            dispatcher(setCurrentPageState({isLoading: false}));
+        });
     }
 
 

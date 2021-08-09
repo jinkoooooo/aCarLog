@@ -32,7 +32,7 @@ function CarMaster() {
 
             <Divider my={6}/>
 
-            <Grid container spacing={6}>
+            {/*<Grid container spacing={6}>
                 <Grid item xs={12} sm={12} md={6} lg={3} xl>
                     <Paper>
                         <CustomCard
@@ -74,7 +74,7 @@ function CarMaster() {
                         />
                     </Paper>
                 </Grid>
-            </Grid>
+            </Grid>*/}
         </React.Fragment>
     );
 }

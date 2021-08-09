@@ -21,6 +21,8 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+import {VehicleData} from "../model/Vehicle";
+import {VehicleAPI} from "../api/VehicleAPI";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -38,6 +40,7 @@ const CardMedia = styled(MuiCardMedia)`
 
 type CardProps = {
     cardName?:string;
+    vehicleData:VehicleData;
     imgUrl?:string;
     context?:any;
     OnClickLearnMore?: () => void
@@ -46,12 +49,25 @@ type CardProps = {
 
 export const CustomCard = (props:CardProps) => {
     const [imgURL, setImgUrl] = useState("/mcb2.jpg");
+    const [driveLog, setDriveLog] = useState([]);
+
+    const {GetVehiclesDriveLog} = VehicleAPI();
 
     useEffect(()=>{
         if(props.imgUrl != undefined){
             setImgUrl(props.imgUrl);
         }
     },[])
+
+    const ClickBtnDrivingLog = () => {
+        GetVehiclesDriveLog(props.vehicleData).then(res => {
+            console.log(res);
+
+            setDriveLog(res.data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     return(
         <Card >
@@ -78,8 +94,8 @@ export const CustomCard = (props:CardProps) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
-                    Learn More
+                <Button size="small" color="primary" onClick = {ClickBtnDrivingLog}>
+                    운행기록보기
                 </Button>
             </CardActions>
         </Card>
