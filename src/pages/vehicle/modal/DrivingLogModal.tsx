@@ -22,6 +22,8 @@ import {DrivingLog, VehicleData} from "../../../model/Vehicle";
 import {VehicleAPI} from "../../../api/VehicleAPI";
 import {CellParams, ColDef, DataGrid} from "@material-ui/data-grid";
 import {Edit2, Trash2} from "react-feather";
+import {useDispatch} from "react-redux";
+import {setCurrentPageState} from "../../../redux/reducers/pageStore";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,17 +74,9 @@ export function DrivingLogModal(props: DrivingLogModal) {
   const {GetVehiclesDriveLog} = VehicleAPI();
   const [driveLogList, setDriveLogList] = useState([]);
 
+  const dispatcher = useDispatch();
 
   useEffect(() => {
-
-    GetVehiclesDriveLog(props.vehicleData).then(res => {
-      console.log(res);
-      let data = (res.data != '') ? res.data : [];
-      setDriveLogList(convertForDataGridList(data));
-
-    }).catch(err => {
-      console.log(err);
-    })
 
   }, []);
 
@@ -134,6 +128,21 @@ export function DrivingLogModal(props: DrivingLogModal) {
   const close = () => {
     if (props.onClose)
       props.onClose();
+  }
+
+  const search = () => {
+    dispatcher(setCurrentPageState({isLoading: true}));
+
+    GetVehiclesDriveLog(props.vehicleData).then(res => {
+      console.log(res);
+      let data = (res.data != '') ? res.data : [];
+      setDriveLogList(convertForDataGridList(data));
+
+    }).catch(err => {
+      console.log(err);
+    }).finally(() => {
+      dispatcher(setCurrentPageState({isLoading: false}));
+    });
   }
 
   /**------------------------------------------
@@ -227,7 +236,10 @@ export function DrivingLogModal(props: DrivingLogModal) {
         handleClose={snackBarClose}
       />
 
-      <Dialog open={props.open}>
+      <Dialog open={props.open}
+              maxWidth="md"
+              fullWidth
+              style={{ zIndex: 0 }}>
         <TransactionSnackbar
           {...errorSnackbarState}
           handleClose={errorSnackBarClose}
@@ -240,7 +252,7 @@ export function DrivingLogModal(props: DrivingLogModal) {
 
           <DialogContent>
             <Paper>
-              <div style={{height: 400, width: 400 }}>
+              <div style={{height: 400, width: '100%' }}>
                 <DataGrid
                     showToolbar
                     columns={columns}
@@ -252,7 +264,7 @@ export function DrivingLogModal(props: DrivingLogModal) {
           </DialogContent>
 
           <DialogActions>
-            <Button type="submit" color="primary">등록</Button>
+            <Button onClick={search} color="primary">조회</Button>
             <Button onClick={close} color="primary">취소</Button>
           </DialogActions>
         </form>

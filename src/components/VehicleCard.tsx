@@ -45,22 +45,35 @@ type CardProps = {
 }
 
 export const VehicleCard = (props:CardProps) => {
-    const [imgURL, setImgUrl] = useState("/mcb2.jpg");
-
+    const [imgURL, setImgUrl] = useState("/vanzS.JPG");
+    const {GetVehicle} = VehicleAPI();
     const [logDialogFlag, setLogDialogFlag] = useState(false);
     const [logInsertFlag, setLogInsertFlag] = useState(false);
 
+    const [bindingVehicleData, setBindingVehicleData] = useState<VehicleData>(new VehicleData());
+
 
     useEffect(()=>{
-        if(props.vehicleData.imageUrl != undefined){
+        setBindingVehicleData(props.vehicleData);
+
+        if(props.vehicleData.imageUrl != null){
             setImgUrl(props.vehicleData.imageUrl);
         }
     },[])
 
+    const insertClose = () => {
+
+        GetVehicle(props.vehicleData).then(res => {
+            let reBindingData = res.data as VehicleData;
+            setBindingVehicleData(reBindingData);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
 
     return(
-        <Card >
+        <Card>
             <CardActionArea>
                 <CardMedia
                     image={imgURL}
@@ -68,37 +81,68 @@ export const VehicleCard = (props:CardProps) => {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {props.vehicleData.name?props.vehicleData.name:"Empty Product"}
+                        {bindingVehicleData.name?bindingVehicleData.name:"Empty Product"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {<>Model : {props.vehicleData.model}
-                            <br/>
-                            주행거리 : {props.vehicleData.odometer} km
-                            <br/>
-                            연식 : {props.vehicleData.modelYear} 년식
-                            <br/>
-                            차량번호 : {props.vehicleData.vehicleNumber} 년식</>}
+                        <Grid container item xs={12} spacing={2} justify="flex-start">
 
+                            <Grid item xs={5} sm={5}>
+                                <label>Model</label>
+                            </Grid>
+                            <Grid item xs={7} sm={7}>
+                                <label>{bindingVehicleData.model}</label>
+                            </Grid>
+
+                            <Grid item xs={5} sm={5}>
+                                <label>주행거리</label>
+                            </Grid>
+                            <Grid item xs={7} sm={7}>
+                                <label>{bindingVehicleData.odometer} km</label>
+                            </Grid>
+
+                            <Grid item xs={5} sm={5}>
+                                <label>연식</label>
+                            </Grid>
+                            <Grid item xs={7} sm={7}>
+                                <label>{bindingVehicleData.modelYear} 년식</label>
+                            </Grid>
+
+                            <Grid item xs={5} sm={5}>
+                                <label>차량번호</label>
+                            </Grid>
+                            <Grid item xs={7} sm={7}>
+                                <label>{bindingVehicleData.vehicleNumber}</label>
+                            </Grid>
+                        </Grid>
                     </Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick = {() => {setLogDialogFlag(!logDialogFlag)}}>
-                    기록조회
-                </Button>
-                <Button size="small" color="primary" onClick = {() => {setLogInsertFlag(!logInsertFlag)}}>
-                    기록등록
-                </Button>
+                <Grid container item xs={12} spacing={2} justify="center">
+
+                    <Grid item xs={6} sm={6}>
+                        <Button size="small" color="primary" onClick = {() => {setLogDialogFlag(!logDialogFlag)}}>
+                            운행기록조회
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                        <Button size="small" color="primary" onClick = {() => {setLogInsertFlag(!logInsertFlag)}}>
+                            운행기록등록
+                        </Button>
+                    </Grid>
+                </Grid>
+
             </CardActions>
             <DrivingLogModal
                 title="차량 기록 일지"
-                vehicleData={props.vehicleData}
+                vehicleData={bindingVehicleData}
                 onClose={() => setLogDialogFlag(false)}
                 open={logDialogFlag}
             />
             <DrivingLogInsertModal
                 title="운행 기록 등록"
-                vehicleData={props.vehicleData}
+                vehicleData={bindingVehicleData}
+                onSubmit={insertClose}
                 onClose={() => setLogInsertFlag(false)}
                 open={logInsertFlag}
             />

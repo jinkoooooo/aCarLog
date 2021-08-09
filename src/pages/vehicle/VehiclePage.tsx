@@ -58,10 +58,10 @@ function VehiclePage() {
 
             <Divider my={6}/>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={6}>
                 {vehicleList.map((value, index) => {
                     return (
-                        <Grid key={index} item xs={4}>
+                        <Grid key={index} item >
                             <Paper>
                                 <VehicleCard
                                     vehicleData={value}

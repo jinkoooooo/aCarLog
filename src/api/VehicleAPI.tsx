@@ -15,7 +15,12 @@ export function VehicleAPI() {
 
             return _api.post('/vehicles/' + DrivingLog.vehicleId+'/driving-logs',
                 JSON.stringify({
-                    driverId: 11,
+                    driver: {
+                        id:userAuth.user?.userData?.id,
+                        username:userAuth.user?.userData?.username,
+                        email:userAuth.user?.userData?.email,
+                        imageUrl:userAuth.user?.userData?.imageUrl
+                    },
                     startDateTime: new Date(DrivingLog.startDateTime).toISOString(),
                     arriveDateTime: new Date(DrivingLog.arriveDateTime).toISOString(),
                     startOdometer: DrivingLog.startOdometer,
