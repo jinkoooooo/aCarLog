@@ -1,10 +1,13 @@
 import authApi, {dataApi} from './IApi';
 import {AxiosRequestConfig} from "axios";
 import {AuthData} from "../model/User";
+import {useTypedSelector} from "../redux/reducers";
+import {VehicleData} from "../model/Vehicle";
 
 export function AuthAPI() {
-
+    const userAuth = useTypedSelector(state => state.userAuth);
     const _api = authApi();
+    const _dataApi = dataApi(userAuth.user?.acessToken);
 
     return {
         /**
@@ -29,7 +32,13 @@ export function AuthAPI() {
                     'X-AUTH-TOKEN': accessToken
                 }
             });
-        }
+        },
+
+        // 특정차량 운행이련 조회
+        GetSelectUserData: function (userId: number) {
+
+            return _api.get('/users/' + userId);
+        },
 
     }
 

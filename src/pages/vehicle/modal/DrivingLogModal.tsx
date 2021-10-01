@@ -77,8 +77,11 @@ export function DrivingLogModal(props: DrivingLogModal) {
   const dispatcher = useDispatch();
 
   useEffect(() => {
+    if(props.open){
+      search();
+    }
 
-  }, []);
+  }, [props.open]);
 
   // 데이터변환
   function convertForDataGridList(targetList: DrivingLog[]) {

@@ -4,7 +4,7 @@ import React from 'react';
 export class VehicleData {
     public id:number;
     public imageUrl:string|null;
-    public manager:Manager|null;
+    public managerId:number|null;
     public model:string|null;
     public modelYear:string|null;
     public name:string;
@@ -16,7 +16,7 @@ export class VehicleData {
 
     constructor(id: number=0,
                 imageUrl: string="",
-                manager: Manager|null= null,
+                managerId: number|null= null,
                 model: string="",
                 modelYear: string="",
                 name: string="",
@@ -27,7 +27,7 @@ export class VehicleData {
                 updateAt: string="") {
         this.id = id;
         this.imageUrl = imageUrl;
-        this.manager = manager;
+        this.managerId = managerId;
         this.model = model;
         this.modelYear = modelYear;
         this.name = name;

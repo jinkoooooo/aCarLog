@@ -21,6 +21,8 @@ import {
 import styled from "styled-components/macro";
 import {spacing, SpacingProps} from "@material-ui/system";
 import {DrivingLog, VehicleData} from "../../../model/Vehicle";
+import {AuthAPI} from "../../../api/AuthAPI";
+import {UserData} from "../../../model/User";
 
 const Button = styled(MuiButton)(spacing);
 
@@ -54,9 +56,18 @@ type VehicleManagerModal = {
 
 
 export function VehicleManagerModal(props: VehicleManagerModal) {
+    const [managerData, setManagerData] = useState<UserData>();
+    const {GetSelectUserData} = AuthAPI();
 
     useEffect(() => {
-
+        if(props.vehicleData.managerId != null){
+            GetSelectUserData(props.vehicleData.managerId).then(res => {
+                setManagerData(res.data as UserData);
+                console.log(res);
+            }).catch(err => {
+                console.log(err.message);
+            })
+        }
     }, []);
 
 
@@ -80,10 +91,15 @@ export function VehicleManagerModal(props: VehicleManagerModal) {
 
                             <Centered>
                                 <Avatar alt="Lucy Lavender" src="/noProfileImg.JPG" />
-                                <Typography variant="body2" gutterBottom>
-                                    <Box fontWeight="fontWeightMedium">{props.vehicleData.manager?.username}</Box>
-                                    <Box fontWeight="fontWeightRegular">{props.vehicleData.manager?.email}</Box>
-                                </Typography>
+                                {managerData != undefined ?
+                                    (<Typography variant="body2" gutterBottom>
+                                        <Box fontWeight="fontWeightMedium">{managerData.username}</Box>
+                                        <Box fontWeight="fontWeightRegular">{managerData.email}</Box>
+                                    </Typography>)
+                                :(<Typography variant="body2" gutterBottom>
+                                        <Box fontWeight="fontWeightMedium">담당자 없음</Box>
+                                    </Typography>)}
+
                             </Centered>
                         </CardContent>
                     </Card>
